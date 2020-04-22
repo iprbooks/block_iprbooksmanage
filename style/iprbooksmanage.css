@@ -190,3 +190,10 @@ a:not([href]):not([tabindex]) {
     background-color: #e9ecef;
     border-color: #dee2e6;
 }
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #1177d1;
+    border-color: #1177d1;
+}

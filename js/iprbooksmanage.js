@@ -1,15 +1,23 @@
 $(document).ready(function () {
     // init
     send_request_m();
+
+    $('.iprbooksmanage-form-control').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("iprbooksmanage-filter-apply").click();
+        }
+    });
 });
 
 // filter
-$("#ipr-filter-apply").click(function () {
+$("#iprbooksmanage-filter-apply").click(function () {
     send_request_m();
 });
 
 // clear filter
-$("#ipr-filter-clear").click(function () {
+$("#iprbooksmanage-filter-clear").click(function () {
     $(".iprmanage-filter").val("");
     send_request_m();
 });

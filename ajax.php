@@ -21,9 +21,9 @@ $user_type = optional_param('user_type', "", PARAM_TEXT);
 
 //user filter
 $filter_book = array(
-    'filter-user-email' => optional_param('filter-user-email', "", PARAM_TEXT),
-    'filter-user-login' => optional_param('filter-user-login', "", PARAM_TEXT),
-    'filter-user-fio' => optional_param('filter-user-fio', "", PARAM_TEXT),
+    'ipr-filter-user-email' => optional_param('ipr-filter-user-email', "", PARAM_TEXT),
+    'ipr-filter-user-login' => optional_param('ipr-filter-user-login', "", PARAM_TEXT),
+    'ipr-filter-user-fio' => optional_param('ipr-filter-user-fio', "", PARAM_TEXT),
 );
 
 $user_types = array(
@@ -52,9 +52,9 @@ switch ($action) {
         $userCollection = new UsersCollection($client);
 
         //set filters
-        $userCollection->setFilter(UsersCollection::EMAIL, $filter_book['filter-user-email']);
-        $userCollection->setFilter(UsersCollection::USERNAME, $filter_book['filter-user-login']);
-        $userCollection->setFilter(UsersCollection::FULLNAME, $filter_book['filter-user-fio']);
+        $userCollection->setFilter(UsersCollection::EMAIL, $filter_book['ipr-filter-user-email']);
+        $userCollection->setFilter(UsersCollection::USERNAME, $filter_book['ipr-filter-user-login']);
+        $userCollection->setFilter(UsersCollection::FULLNAME, $filter_book['ipr-filter-user-fio']);
         $userCollection->setOffset($userCollection->getLimit() * $page);
         $userCollection->get();
 
@@ -106,6 +106,10 @@ switch ($action) {
             $text = "Пользователь успещно зарегистрирован";
         }
         break;
+}
+
+if (mb_strlen($content) < 200) {
+    $content = '<div style="font-size: 150%; text-align: center;">По вашему запросу ничего не найдено</div>' . $content;
 }
 
 echo json_encode(['action' => $action, 'type' => $type, 'html' => $content, 'text' => $text]);

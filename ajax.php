@@ -58,6 +58,8 @@ switch ($action) {
         $userCollection->setOffset($userCollection->getLimit() * $page);
         $userCollection->get();
 
+        $message = $userCollection->getMessage();
+
         foreach ($userCollection as $user) {
             $user->get($user->getId());
             $blocked = $user->getBlocked() == 0 ? "Нет" : "Да";
@@ -103,13 +105,13 @@ switch ($action) {
         $user = $userManager->registerNewUser($email, $fio, $pass, $user_type);
         $text = $user->getMessage();
         if ($text == '') {
-            $text = "Пользователь успещно зарегистрирован";
+            $text = "Пользователь успешно зарегистрирован";
         }
         break;
 }
 
 if (mb_strlen($content) < 200) {
-    $content = '<div style="font-size: 150%; text-align: center;">По вашему запросу ничего не найдено</div>' . $content;
+    $content = '<div style="font-size: 150%; text-align: center;">' . $message . '</div>' . $content;
 }
 
 echo json_encode(['action' => $action, 'type' => $type, 'html' => $content, 'text' => $text]);
